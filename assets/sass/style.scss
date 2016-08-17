@@ -1,0 +1,83 @@
+/*!
+	Theme Name: n8finch dev theme
+	Theme URI: https://www.n8finch.com/
+	Description: This n8finch dev starter theme
+	Author: Nate Finch
+	Author URI: http://www.n8finch.com/
+
+	Version: 1.0.0
+
+	Tags: genesis
+
+	Template: genesis
+	Template Version: 2.2.3
+
+	Text Domain: n8finch-dev-theme
+
+	License: GPL-2.0+
+	License URI: http://www.gnu.org/licenses/gpl-2.0.html
+*/
+
+/* # Table of Contents
+- HTML5 Reset
+	- Baseline Normalize
+	- Box Sizing
+	- Float Clearing
+- Defaults
+	- Typographical Elements
+	- Headings
+	- Objects
+	- Gallery
+	- Forms
+	- Tables
+	- Screen Reader Text
+- Structure and Layout
+	- Site Containers
+	- Column Widths and Positions
+	- Column Classes
+- Common Classes
+	- Avatar
+	- Genesis
+	- Search Form
+	- Titles
+	- WordPress
+- Widgets
+	- Featured Content
+- Plugins
+	- Genesis eNews Extended
+	- Jetpack
+- Skip Links
+- Site Header
+	- Title Area
+	- Widget Area
+- Site Navigation
+	- Accessible Menu
+	- Site Header Navigation
+	- After Header Navigation
+	- Footer Navigation
+- Content Area
+	- Entries
+	- Entry Meta
+	- Pagination
+	- Comments
+- Sidebars
+- Footer Widgets
+- Site Footer
+- Media Queries
+	- Max-width: 1340px
+	- Max-width: 1200px
+	- Max-width: 1023px
+	- Max-width: 860px
+- Print Styles
+*/
+
+@import "0.utilities/index";
+@import "1.html5-reset-defaults-access/index";
+@import "2.structure-layout-common-classes/index";
+@import "3.widgets-plugins/index";
+@import "4.site-header-navigation/index";
+@import "5.content-area/index";
+@import "6.sidebars/index";
+@import "7.site-footer-widgets/index";
+@import "8.media-queries/index";
+@import "9.print-styles/index";

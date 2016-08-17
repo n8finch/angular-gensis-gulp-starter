@@ -1,0 +1,51 @@
+{
+  "name": "n8finch-dev-theme",
+  "version": "1.0.0",
+  "description": "starter theme for genesis",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/n8finch/n8finch-dev-starter-theme.git"
+  },
+  "keywords": [
+    "genesis",
+    "starter",
+    "theme",
+    "sass"
+  ],
+  "author": "Nate Finch",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/n8finch/n8finch-dev-starter-theme/issues"
+  },
+  "homepage": "https://github.com/n8finch/n8finch-dev-starter-theme#readme",
+  "//": "Remove any dependencies not required",
+  "devDependencies": {
+    "bourbon": "^4.2.6",
+    "bourbon-neat": "^1.7.2",
+    "del": "^2.2.2",
+    "gulp": "^3.9.1",
+    "gulp-autoprefixer": "^3.1.1",
+    "gulp-cache": "^0.4.5",
+    "gulp-concat": "^2.6.0",
+    "gulp-cssnano": "^2.1.2",
+    "gulp-imagemin": "^3.0.3",
+    "gulp-jshint": "^2.0.1",
+    "gulp-livereload": "^3.8.1",
+    "gulp-notify": "^2.2.0",
+    "gulp-plumber": "^1.1.0",
+    "gulp-postcss": "^6.1.1",
+    "gulp-rename": "^1.2.2",
+    "gulp-ruby-sass": "^2.1.0",
+    "gulp-sass": "^2.3.2",
+    "gulp-sass-lint": "^1.2.0",
+    "gulp-sourcemaps": "^1.6.0",
+    "gulp-uglify": "^2.0.0",
+    "css-mqpacker": "^5.0.1",
+    "pixrem": "^3.0.1",
+    "sass-rem": "^1.2.2"
+  }
+}

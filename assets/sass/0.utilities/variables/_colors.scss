@@ -1,0 +1,41 @@
+/**
+ * Set Site Color Palette
+ *
+ * All of these can be variables
+ */
+
+$white: #fff;
+$black: #000;
+
+$base__color: #333;
+$body__backgroundColor: #eee;
+
+$link__color: #c3251d;
+$link__hover: #333;
+$link__focus: #333;
+
+
+//
+// Navigation Colors
+//
+
+$nav__linkColor: #333;
+$nav__hoverColor: #c3251d;
+$submenu__borderColor: #eee;
+$submenu__linkBackgroundColor: $white;
+
+$primaryNav__backgroundColor: $white;
+$primaryNav__borderColor: #eee;
+$primaryNav__linkColor: $nav__linkColor;
+
+$secondaryNav__backgroundColor: $white;
+$primaryNav__borderColor: #eee;
+$secondaryNav__linkColor: $nav__linkColor;
+
+$jsNav__backgroundColor: $white;
+$jsNav__linkColor: $black;
+$jsNav__focusColor: #c3251d;
+
+
+$siteHeader__backgroundColor: $white;
+$siteFooter__backgroundColor: $white;
