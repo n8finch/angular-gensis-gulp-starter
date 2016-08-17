@@ -7,10 +7,11 @@
 var gulp = require('gulp'),
   sass = require('gulp-ruby-sass'),
   autoprefixer = require('gulp-autoprefixer'),
+  sourcemaps = require('gulp-sourcemaps'),
   cssnano = require('gulp-cssnano'),
-  jshint = require('gulp-jshint'),
   uglify = require('gulp-uglify'),
   imagemin = require('gulp-imagemin'),
+  copy = require('gulp-contrib-copy'),
   rename = require('gulp-rename'),
   concat = require('gulp-concat'),
   notify = require('gulp-notify'),
@@ -20,12 +21,13 @@ var gulp = require('gulp'),
 
 // Styles
 gulp.task('styles', function() {
-  return sass('src/styles/main.scss', { style: 'expanded' })
+  return sass('assets/sass/style.scss', { style: 'expanded' })
     .pipe(autoprefixer('last 2 version'))
-    .pipe(gulp.dest('dist/styles'))
+    .pipe(sourcemaps.write())
+    .pipe(gulp.dest(''))
     .pipe(rename({ suffix: '.min' }))
     .pipe(cssnano())
-    .pipe(gulp.dest('dist/styles'))
+    .pipe(gulp.dest(''))
     .pipe(notify({ message: 'Styles task complete' }));
 });
 
