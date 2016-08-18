@@ -6,3 +6,17 @@
   text-align: right;
   width: 800px;
 }
+
+
+
+.fontawesome-text {
+  display: none;
+}
+
+ul#menu-social > li::before {
+  margin-left: 10px;
+}
+
+.widget {
+  margin-bottom: 0;
+}

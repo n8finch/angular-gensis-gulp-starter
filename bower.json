@@ -1,0 +1,31 @@
+{
+  "name": "genesis-angular-gulp-theme",
+  "description": "starter theme for genesis with angular and gulp",
+  "main": "index.js",
+  "authors": [
+    "Nate Finch"
+  ],
+  "license": "ISC",
+  "keywords": [
+    "genesis",
+    "starter",
+    "theme",
+    "sass",
+    "angular",
+    "gulp"
+  ],
+  "homepage": "https://github.com/n8finch/angular-gensis-gulp-starter",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "devDependencies": {
+    "angular": "^1.5.8",
+    "angular-route": "^1.5.8",
+    "angular-resource": "^1.5.8"
+  }
+}

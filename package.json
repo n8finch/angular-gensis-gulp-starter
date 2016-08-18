@@ -1,7 +1,7 @@
 {
-  "name": "n8finch-dev-theme",
+  "name": "genesis-angular-gulp-theme",
   "version": "1.0.0",
-  "description": "starter theme for genesis",
+  "description": "starter theme for genesis with angular and gulp",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -14,7 +14,9 @@
     "genesis",
     "starter",
     "theme",
-    "sass"
+    "sass",
+    "angular",
+    "gulp"
   ],
   "author": "Nate Finch",
   "license": "ISC",
@@ -46,7 +48,8 @@
     "gulp-sass-lint": "^1.2.0",
     "gulp-sourcemaps": "^1.6.0",
     "gulp-uglify": "^2.0.0",
-    "pixrem": "^3.0.1",
+    "jshint": "^2.9.2",
+    "jslint": "^0.10.3",
     "sass-rem": "^1.2.2"
   }
 }

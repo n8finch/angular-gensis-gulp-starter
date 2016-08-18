@@ -25,7 +25,7 @@ gulp.task('styles', function() {
     .pipe(autoprefixer('last 2 version'))
     .pipe(sourcemaps.write())
     .pipe(gulp.dest(''))
-    .pipe(rename({ suffix: '.min' }))
+    .pipe(rename({ suffix: '' }))
     .pipe(cssnano())
     .pipe(gulp.dest(''))
     .pipe(notify({ message: 'Styles task complete' }));
@@ -33,9 +33,7 @@ gulp.task('styles', function() {
 
 // Scripts
 gulp.task('scripts', function() {
-  return gulp.src('src/scripts/**/*.js')
-    .pipe(jshint('.jshintrc'))
-    .pipe(jshint.reporter('default'))
+  return gulp.src(['bower_components/angular/angular.min.js', 'bower_components/angular-resource/angular-resource.min.js', 'bower_components/angular-route/angular-route.min.js', 'assets/js/**/*.js'])
     .pipe(concat('main.js'))
     .pipe(gulp.dest('dist/scripts'))
     .pipe(rename({ suffix: '.min' }))
