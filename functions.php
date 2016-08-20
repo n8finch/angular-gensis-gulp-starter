@@ -39,16 +39,15 @@ function genesis_sample_enqueue_scripts_styles() {
 	wp_enqueue_style( 'genesis-sample-fonts', '//fonts.googleapis.com/css?family=Source+Sans+Pro:400,600,700', array(), CHILD_THEME_VERSION );
 	wp_enqueue_style( 'dashicons' );
 
-	wp_enqueue_script( 'genesis-sample-responsive-menu', $stylesheet_dir . '/js/responsive-menu.js', array( 'jquery' ), '1.0.0', true );
+	wp_enqueue_script( 'genesis-sample-responsive-menu', $stylesheet_dir . '/assets/js/responsive-menu.js', array( 'jquery' ), '1.0.0', true );
 	$output = array(
 		'mainMenu' => __( 'Menu', 'genesis-sample' ),
 		'subMenu'  => __( 'Menu', 'genesis-sample' ),
 	);
 
-	wp_enqueue_script( 'concat-js-files', $stylesheet_dir . '/dist/scripts/main.min.js', array( 'jquery'), '1.0.0', true);
-
 	wp_localize_script( 'genesis-sample-responsive-menu', 'genesisSampleL10n', $output );
 
+	wp_enqueue_script( 'concat-js-files', $stylesheet_dir . '/main.min.js', array( 'jquery'), '1.0.0', true);
 }
 
 //* Add HTML5 markup structure
@@ -117,5 +116,16 @@ function genesis_sample_comments_gravatar( $args ) {
 	$args['avatar_size'] = 60;
 
 	return $args;
+
+}
+
+//*Add the ng-view to the <main class="content" element
+add_filter( 'genesis_attr_content_output', 'add_ng_view_to_content', 99, 3 );
+
+function add_ng_view_to_content( $output, $attributes, $context ) {
+
+	$output .= ' ng-view';
+
+	return $output;
 
 }

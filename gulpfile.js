@@ -33,41 +33,41 @@ gulp.task('styles', function() {
 
 // Scripts
 gulp.task('scripts', function() {
-  return gulp.src(['bower_components/angular/angular.min.js', 'bower_components/angular-resource/angular-resource.min.js', 'bower_components/angular-route/angular-route.min.js', 'assets/js/**/*.js'])
+  return gulp.src(['bower_components/angular/angular.min.js', 'bower_components/angular-resource/angular-resource.min.js', 'bower_components/angular-route/angular-route.min.js', 'assets/js/custom.js'])
     .pipe(concat('main.js'))
-    .pipe(gulp.dest('dist/scripts'))
+    .pipe(gulp.dest(''))
     .pipe(rename({ suffix: '.min' }))
     .pipe(uglify())
-    .pipe(gulp.dest('dist/scripts'))
+    .pipe(gulp.dest(''))
     .pipe(notify({ message: 'Scripts task complete' }));
 });
 
 // Images
-gulp.task('images', function() {
-  return gulp.src('src/images/**/*')
-    .pipe(cache(imagemin({ optimizationLevel: 3, progressive: true, interlaced: true })))
-    .pipe(gulp.dest('dist/images'))
-    .pipe(notify({ message: 'Images task complete' }));
-});
+// gulp.task('images', function() {
+//   return gulp.src('src/images/**/*')
+//     .pipe(cache(imagemin({ optimizationLevel: 3, progressive: true, interlaced: true })))
+//     .pipe(gulp.dest('dist/images'))
+//     .pipe(notify({ message: 'Images task complete' }));
+// });
 
 // Clean
-gulp.task('clean', function() {
-  return del(['dist/styles', 'dist/scripts', 'dist/images']);
-});
+// gulp.task('clean', function() {
+//   return del(['dist/styles', 'dist/scripts', 'dist/images']);
+// });
 
 // Default task
-gulp.task('default', ['clean'], function() {
-  gulp.start('styles', 'scripts', 'images');
+gulp.task('default', function() {
+  gulp.start('styles', 'scripts', 'watch');
 });
 
 // Watch
 gulp.task('watch', function() {
 
   // Watch .scss files
-  gulp.watch('src/styles/**/*.scss', ['styles']);
+  gulp.watch('assets/sass/**/*.scss', ['styles']);
 
   // Watch .js files
-  gulp.watch('src/scripts/**/*.js', ['scripts']);
+  gulp.watch('assets/js/**/*.js', ['scripts']);
 
   // Watch image files
   gulp.watch('src/images/**/*', ['images']);
