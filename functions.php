@@ -47,14 +47,21 @@ function genesis_sample_enqueue_scripts_styles() {
 
 	wp_localize_script( 'genesis-sample-responsive-menu', 'genesisSampleL10n', $output );
 
-	wp_enqueue_script( 'concat-js-files', $stylesheet_dir . '/main.min.js', array( 'jquery'), '1.0.0', true);
+	wp_enqueue_script( 'concat-js-files', $stylesheet_dir . '/main.min.js', array( 'jquery' ), '1.0.0', true );
 }
 
 //* Add HTML5 markup structure
 add_theme_support( 'html5', array( 'caption', 'comment-form', 'comment-list', 'gallery', 'search-form' ) );
 
 //* Add Accessibility support
-add_theme_support( 'genesis-accessibility', array( '404-page', 'drop-down-menu', 'headings', 'rems', 'search-form', 'skip-links' ) );
+add_theme_support( 'genesis-accessibility', array(
+	'404-page',
+	'drop-down-menu',
+	'headings',
+	'rems',
+	'search-form',
+	'skip-links'
+) );
 
 //* Add viewport meta tag for mobile browsers
 add_theme_support( 'genesis-responsive-viewport' );
@@ -78,10 +85,26 @@ add_theme_support( 'genesis-after-entry-widget-area' );
 add_theme_support( 'genesis-footer-widgets', 3 );
 
 //* Add Image Sizes
-add_image_size( 'featured-image', 720, 400, TRUE );
+add_image_size( 'featured-image', 720, 400, true );
+
+//TODO add image sizes for blog picture
+//add_image_size( 'blog-image-lg', 900, 500, TRUE );
+//
+//add_filter('image_size_names_choose', 'my_image_sizes');
+//function n8f_image_sizes($sizes) {
+//	$addsizes = array(
+//		"featured-image" => __( "Featured Image"),
+//		"blog-image-lg" => __( "Large Blog Image")
+//	);
+//	$newsizes = array_merge($sizes, $addsizes);
+//	return $newsizes;
+//}
 
 //* Rename primary and secondary navigation menus
-add_theme_support( 'genesis-menus' , array( 'primary' => __( 'After Header Menu', 'genesis-sample' ), 'secondary' => __( 'Footer Menu', 'genesis-sample' ) ) );
+add_theme_support( 'genesis-menus', array(
+	'primary'   => __( 'After Header Menu', 'genesis-sample' ),
+	'secondary' => __( 'Footer Menu', 'genesis-sample' )
+) );
 
 //* Reposition the secondary navigation menu
 remove_action( 'genesis_after_header', 'genesis_do_subnav' );
@@ -119,13 +142,34 @@ function genesis_sample_comments_gravatar( $args ) {
 
 }
 
-//*Add the ng-view to the <main class="content" element
+//*Add the ng-app to the <body> element
+add_filter( 'genesis_attr_body', __NAMESPACE__ . '\add_ng_app_to_body' );
+function add_ng_app_to_body( $attributes ) {
+
+	$attributes['ng-app'] = 'myApp';
+
+	return $attributes;
+}
+
+//*Add the ng-view to the <main class="content"> element
 add_filter( 'genesis_attr_content_output', 'add_ng_view_to_content', 99, 3 );
-
-function add_ng_view_to_content( $output, $attributes, $context ) {
-
+function add_ng_view_to_content( $output ) {
 	$output .= ' ng-view';
 
 	return $output;
+}
 
+//*Remove Standard Genesis Loop
+remove_action('genesis_loop', 'genesis_do_loop');
+
+//*Add a controller in the Angular view to work with
+add_action('genesis_loop', __NAMESPACE__ . '\do_ng_view_content');
+function do_ng_view_content() {
+	$output =   '<div ng-controller="example">
+			        <form>
+			            <input type="text" ng-model="post.placeholder" />
+			        </form>
+			        <div>{{post.placeholder}}</div>
+			    </div>';
+	echo $output;
 }

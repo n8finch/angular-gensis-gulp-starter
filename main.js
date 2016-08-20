@@ -352,6 +352,17 @@ n&&(l[m.name]=n)}q=l}else q=null;else q=null;q=a=q}q&&(b=t(c,{params:d.extend({}
 
 'use-strict';
 
-(function($) {
+angular.module('myApp', [])
+  .controller('example', ['$scope', function ($scope) {
+    $scope.post = {
+      placeholder: 'Enter Text'
+    };
+
+  }]);
+
+(function ($) {
+
 
 })(jQuery);
+
+
