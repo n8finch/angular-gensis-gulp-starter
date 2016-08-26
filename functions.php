@@ -142,6 +142,12 @@ function genesis_sample_comments_gravatar( $args ) {
 
 }
 
+
+/**
+ * Add all of the new Angular stuff in functions
+ ===================================================*/
+
+
 //*Add the ng-app to the <body> element
 add_filter( 'genesis_attr_body', __NAMESPACE__ . '\add_ng_app_to_body' );
 function add_ng_app_to_body( $attributes ) {
@@ -152,24 +158,78 @@ function add_ng_app_to_body( $attributes ) {
 }
 
 //*Add the ng-view to the <main class="content"> element
-add_filter( 'genesis_attr_content_output', 'add_ng_view_to_content', 99, 3 );
+add_filter( 'genesis_attr_content_output', __NAMESPACE__ . '\add_ng_view_to_content', 99, 3 );
 function add_ng_view_to_content( $output ) {
 	$output .= ' ng-view';
 
 	return $output;
 }
 
+//* =================================================
+//* Mostly from Mor10's Lynda course
+//* Add various fields to the WP REST API JSON output
+//* https://www.lynda.com/WordPress-tutorials/WordPress-REST-API-WP-API-First-Look/383783-2.html
+
+function register_new_restapi_fields() {
+	// Add Author Name
+	register_api_field( 'post',
+		'author_name',
+		array(
+			'get_callback'		=> 'get_author_name_from_restapi',
+			'update_callback'	=> null,
+			'schema'			=> null
+		)
+	);
+
+	// Add Featured Image
+	register_api_field( 'post',
+		'featured_image_src',
+		array(
+			'get_callback'		=> 'get_image_src_from_restapi',
+			'update_callback'	=> null,
+			'schema'			=> null
+		)
+	);
+}
+
+function get_author_name_from_restapi( $object, $field_name, $request ) {
+	return get_the_author_meta( 'display_name' );
+}
+
+function get_image_src_from_restapi( $object, $field_name, $request ) {
+	$imgArray = wp_get_attachment_image_src( get_post_thumbnail_id( $object['id'] ), 'full' );
+	return $imgArray[0];
+}
+
+add_action( 'rest_api_init', __NAMESPACE__ . '\register_new_restapi_fields');
+//* end Mor10's code
+//* =================================================
+
+
 //*Remove Standard Genesis Loop
-remove_action('genesis_loop', 'genesis_do_loop');
+remove_action( 'genesis_loop', 'genesis_do_loop' );
 
 //*Add a controller in the Angular view to work with
 add_action('genesis_loop', __NAMESPACE__ . '\do_ng_view_content');
 function do_ng_view_content() {
-	$output =   '<div ng-controller="example">
-			        <form>
-			            <input type="text" ng-model="post.placeholder" />
-			        </form>
-			        <div>{{post.placeholder}}</div>
+	$output =   '<div ng-controller="example">			 
+			        <div class="posts-list" ng-repeat="post in posts">
+			        	<div class="single-post">
+			        	<h2>{{post.title.rendered}}</h2>
+			        	<p>Posted by {{post.author_name}} on {{post.date | date:\'longDate\'}}</p>
+			        	<img ng-src="{{post.featured_image_src}}"/>
+			        	<p ng-bind-html="post.excerpt.rendered | to_trusted"></p>
+			        	<p><a href="{{post.slug}}">Read more...</a></p>
+			        	</div>	
+					</div>
 			    </div>';
 	echo $output;
+}
+
+//*Add featured image to home page loop and single posts
+add_action( 'genesis_entry_header', __NAMESPACE__ .'\featured_post_image', 15 );
+function featured_post_image() {
+	if ( is_singular() || is_home() ) {
+		the_post_thumbnail( 'post-image' );
+	}
 }

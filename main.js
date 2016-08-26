@@ -350,19 +350,32 @@ n&&(l[m.name]=n)}q=l}else q=null;else q=null;q=a=q}q&&(b=t(c,{params:d.extend({}
 "$animate"];w.$inject=["$compile","$controller","$route"]})(window,window.angular);
 //# sourceMappingURL=angular-route.min.js.map
 
-'use-strict';
+(function (angular) {
+  'use strict';
 
-angular.module('myApp', [])
-  .controller('example', ['$scope', function ($scope) {
-    $scope.post = {
-      placeholder: 'Enter Text'
-    };
+  angular.module('myApp', [])
+    .controller('example', ['$scope', '$http', function ($scope, $http) {
+      $http({
+        url: 'https://n8finch.dev/wp-json/wp/v2/posts',
+        cache: true
+      }).success(function (res) {
+        $scope.posts = res;
+        console.log($scope.posts);
+      });
 
-  }]);
+    }])
+    .filter('to_trusted', ['$sce', function ($sce) {
+      return function (text) {
+        return $sce.trustAsHtml(text);
+      };
+    }]);
 
-(function ($) {
+})(window.angular);
 
-
-})(jQuery);
+//
+// (function ($) {
+//
+//
+// })(jQuery);
 
 

@@ -12,6 +12,9 @@ video,
 
 img {
   height: auto;
+  -webkit-box-shadow: 5px 5px 10px 0px rgba(170,170,170,1);
+  -moz-box-shadow: 5px 5px 10px 0px rgba(170,170,170,1);
+  box-shadow: 5px 5px 10px 0px rgba(170,170,170,1);
 }
 
 figure {
