@@ -47,7 +47,18 @@ function genesis_sample_enqueue_scripts_styles() {
 
 	wp_localize_script( 'genesis-sample-responsive-menu', 'genesisSampleL10n', $output );
 
-	wp_enqueue_script( 'concat-js-files', $stylesheet_dir . '/main.min.js', array( 'jquery' ), '1.0.0', true );
+	wp_enqueue_script( 'concat-js-files', $stylesheet_dir . '/main.js', array( 'jquery' ), '1.0.0', true );
+
+	wp_localize_script( 'concat-js-files', 'ajaxInfo',
+		array(
+
+			'api_url'			 => rest_get_url_prefix() . '/wp/v2/',
+			'template_directory' => get_template_directory_uri() . '/',
+			'nonce'				 => wp_create_nonce( 'wp_rest' ),
+			'is_admin'			 => current_user_can('administrator')
+
+		)
+	);
 }
 
 //* Add HTML5 markup structure
@@ -160,7 +171,7 @@ function add_ng_app_to_body( $attributes ) {
 //*Add the ng-view to the <main class="content"> element
 add_filter( 'genesis_attr_content_output', __NAMESPACE__ . '\add_ng_view_to_content', 99, 3 );
 function add_ng_view_to_content( $output ) {
-	$output .= ' ng-view';
+	$output .= ' ui-view';
 
 	return $output;
 }
@@ -212,17 +223,7 @@ remove_action( 'genesis_loop', 'genesis_do_loop' );
 //*Add a controller in the Angular view to work with
 add_action('genesis_loop', __NAMESPACE__ . '\do_ng_view_content');
 function do_ng_view_content() {
-	$output =   '<div ng-controller="example">			 
-			        <div class="posts-list" ng-repeat="post in posts">
-			        	<div class="single-post">
-			        	<h2>{{post.title.rendered}}</h2>
-			        	<p>Posted by {{post.author_name}} on {{post.date | date:\'longDate\'}}</p>
-			        	<img ng-src="{{post.featured_image_src}}"/>
-			        	<p ng-bind-html="post.excerpt.rendered | to_trusted"></p>
-			        	<p><a href="{{post.slug}}">Read more...</a></p>
-			        	</div>	
-					</div>
-			    </div>';
+	$output =   '';
 	echo $output;
 }
 

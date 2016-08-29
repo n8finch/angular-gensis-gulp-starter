@@ -33,7 +33,7 @@ gulp.task('styles', function() {
 
 // Scripts
 gulp.task('scripts', function() {
-  return gulp.src(['bower_components/angular/angular.min.js', 'bower_components/angular-resource/angular-resource.min.js', 'bower_components/angular-route/angular-route.min.js', 'assets/js/custom.js'])
+  return gulp.src(['bower_components/angular/angular.js', 'bower_components/angular-resource/angular-resource.js', 'bower_components/angular-ui-router/release/angular-ui-router.js', 'assets/js/custom.js'])
     .pipe(concat('main.js'))
     .pipe(gulp.dest(''))
     .pipe(rename({ suffix: '.min' }))
