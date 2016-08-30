@@ -46,16 +46,17 @@ function genesis_sample_enqueue_scripts_styles() {
 	);
 
 	wp_localize_script( 'genesis-sample-responsive-menu', 'genesisSampleL10n', $output );
-
+	//TODO: change back to .min.js
 	wp_enqueue_script( 'concat-js-files', $stylesheet_dir . '/main.js', array( 'jquery' ), '1.0.0', true );
 
+	//TODO: change the 'template_directory below to child theme, but need to ng-include template files
 	wp_localize_script( 'concat-js-files', 'ajaxInfo',
 		array(
 
-			'api_url'			 => rest_get_url_prefix() . '/wp/v2/',
-			'template_directory' => get_template_directory_uri() . '/',
-			'nonce'				 => wp_create_nonce( 'wp_rest' ),
-			'is_admin'			 => current_user_can('administrator')
+			'api_url'            => rest_get_url_prefix() . '/wp/v2/',
+			'template_directory' => get_stylesheet_directory_uri() . '/',
+			'nonce'              => wp_create_nonce( 'wp_rest' ),
+			'is_admin'           => current_user_can( 'administrator' )
 
 		)
 	);
@@ -156,7 +157,7 @@ function genesis_sample_comments_gravatar( $args ) {
 
 /**
  * Add all of the new Angular stuff in functions
- ===================================================*/
+ * ===================================================*/
 
 
 //*Add the ng-app to the <body> element
@@ -186,9 +187,18 @@ function register_new_restapi_fields() {
 	register_api_field( 'post',
 		'author_name',
 		array(
-			'get_callback'		=> 'get_author_name_from_restapi',
-			'update_callback'	=> null,
-			'schema'			=> null
+			'get_callback'    => 'get_author_name_from_restapi',
+			'update_callback' => null,
+			'schema'          => null
+		)
+	);
+
+	register_api_field( 'post',
+		'category_name',
+		array(
+			'get_callback'    => 'get_category_name_from_restapi',
+			'update_callback' => null,
+			'schema'          => null
 		)
 	);
 
@@ -196,9 +206,9 @@ function register_new_restapi_fields() {
 	register_api_field( 'post',
 		'featured_image_src',
 		array(
-			'get_callback'		=> 'get_image_src_from_restapi',
-			'update_callback'	=> null,
-			'schema'			=> null
+			'get_callback'    => 'get_image_src_from_restapi',
+			'update_callback' => null,
+			'schema'          => null
 		)
 	);
 }
@@ -207,12 +217,21 @@ function get_author_name_from_restapi( $object, $field_name, $request ) {
 	return get_the_author_meta( 'display_name' );
 }
 
+function get_category_name_from_restapi( $object, $field_name, $request ) {
+	$cats = [];
+	foreach ($object['categories'] as $cat ) {
+		array_push($cats, get_cat_name($cat));
+	}
+	return $cats;
+}
+
 function get_image_src_from_restapi( $object, $field_name, $request ) {
 	$imgArray = wp_get_attachment_image_src( get_post_thumbnail_id( $object['id'] ), 'full' );
+
 	return $imgArray[0];
 }
 
-add_action( 'rest_api_init', __NAMESPACE__ . '\register_new_restapi_fields');
+add_action( 'rest_api_init', __NAMESPACE__ . '\register_new_restapi_fields' );
 //* end Mor10's code
 //* =================================================
 
@@ -221,14 +240,14 @@ add_action( 'rest_api_init', __NAMESPACE__ . '\register_new_restapi_fields');
 remove_action( 'genesis_loop', 'genesis_do_loop' );
 
 //*Add a controller in the Angular view to work with
-add_action('genesis_loop', __NAMESPACE__ . '\do_ng_view_content');
+add_action( 'genesis_loop', __NAMESPACE__ . '\do_ng_view_content' );
 function do_ng_view_content() {
-	$output =   '';
+	$output = '';
 	echo $output;
 }
 
 //*Add featured image to home page loop and single posts
-add_action( 'genesis_entry_header', __NAMESPACE__ .'\featured_post_image', 15 );
+add_action( 'genesis_entry_header', __NAMESPACE__ . '\featured_post_image', 15 );
 function featured_post_image() {
 	if ( is_singular() || is_home() ) {
 		the_post_thumbnail( 'post-image' );

@@ -37211,8 +37211,8 @@ angular.module('ui.router.state')
 
 
   angular.module('myApp', ['ngResource', 'ui.router'])
-    .factory( 'Posts', function( $resource ) {
-      return $resource( appInfo.api_url + 'posts/:ID', {
+    .factory('Posts', function ($resource) {
+      return $resource(appInfo.api_url + 'posts/:ID', {
         ID: '@id'
       });
     })
@@ -37222,16 +37222,16 @@ angular.module('ui.router.state')
         cache: true
       }).success(function (res) {
         $scope.posts = res;
-        console.log($scope.posts);
       });
 
     }])
-    .controller('singleView',['$scope','$stateParams','PostsBySlug','Comments',function($scope,$stateParams,PostsBySlug,Comments){
+    .controller('singleView', ['$scope', '$stateParams', 'PostsBySlug', 'Comments', function ($scope, $stateParams, PostsBySlug, Comments) {
 
-      PostsBySlug.get($stateParams,function(res){
+      PostsBySlug.get($stateParams, function (res) {
         $scope.post = res.post;
       });
-
+      //TODO: read and understand all of this.
+      //TODO: figure out commenting, or just add that in at the bottom??
       // $scope.savecomment = function(){
       //   $scope.openComment.post = $scope.post.ID;
       //   Comments.save($scope.openComment,function(res){
@@ -37246,45 +37246,21 @@ angular.module('ui.router.state')
       // }
 
     }])
-    // .config(function($routeProvider) {
-    //   $routeProvider
-    //     .when("/", {
-    //       templateUrl: "/index.html",
-    //       controller: "Posts"
-    //     })
-    //     .otherwise({
-    //       redirectTo: "/"
-    //     });
-    // })
     //ROUTES
-    .config(function($stateProvider,$urlRouterProvider){
+    .config(function ($stateProvider, $urlRouterProvider) {
       $urlRouterProvider.otherwise('/');
       $stateProvider
-        .state('post',{
-          url:'/',
-          controller:'Posts',
-          templateUrl:ajaxInfo.template_directory+'templates/app-index.html'
+        .state('post', {
+          url: '/',
+          controller: 'Posts',
+          templateUrl: ajaxInfo.template_directory + 'assets/templates/app-index.html'
         })
-        .state('single',{
-          url:'/post/:slug',
-          controller:'singleView',
-          templateUrl:ajaxInfo.template_directory+'templates/single.html'
+        .state('single', {
+          url: '/post/:slug',
+          controller: 'singleView',
+          templateUrl: ajaxInfo.template_directory + 'assets/templates/single.html'
         })
     })
-    // .config( function( $stateProvider, $urlRouterProvider){
-    //   $urlRouterProvider.otherwise('/');
-    //   $stateProvider
-    //     .state( 'posts', {
-    //       url: '/',
-    //       controller: 'Posts',
-    //       templateUrl: appInfo.template_directory + 'app/templates/index.html'
-    //     });
-    // //     .state( 'detail', {
-    // //       url: '/posts/:id',
-    // //       controller: 'DetailCtrl',
-    // //       templateUrl: appInfo.template_directory + 'templates/detail.html'
-    // //     });
-    // })
     .filter('to_trusted', ['$sce', function ($sce) {
       return function (text) {
         return $sce.trustAsHtml(text);
@@ -37292,9 +37268,8 @@ angular.module('ui.router.state')
     }]);
 
 
-
 })(window.angular);
-console.log(ajaxInfo);
+
 //
 // (function ($) {
 //
