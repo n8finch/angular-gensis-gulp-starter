@@ -37229,15 +37229,6 @@ angular.module('ui.router.state')
     })
     .controller('singleView', ['$scope', '$http', 'PostsBySlug', '$stateParams', function ($scope, $http, PostsBySlug, $stateParams) {
 
-      // console.log(
-      //   PostsBySlug.get($stateParams, function (res) {
-      //     console.log($stateParams);
-      //     $scope.post = res;
-      //   })
-      // );
-
-      console.log($stateParams.slug);
-
       $http({
         url: 'https://n8finch.dev/wp-json/wp/v2/posts?filter[name]=' + $stateParams.slug,
         cache: true
@@ -37263,7 +37254,7 @@ angular.module('ui.router.state')
 
     }])
     //ROUTES
-    .config(function ($stateProvider, $urlRouterProvider) {
+    .config([ '$stateProvider', '$urlRouterProvider', '$locationProvider', function ($stateProvider, $urlRouterProvider, $locationProvider) {
       $urlRouterProvider.otherwise('/');
       $stateProvider
         .state('post', {
@@ -37272,11 +37263,14 @@ angular.module('ui.router.state')
           templateUrl: ajaxInfo.template_directory + 'assets/templates/app-index.html'
         })
         .state('single', {
-          url: '/post/:slug',
+          url: '/:slug',
           controller: 'singleView',
           templateUrl: ajaxInfo.template_directory + 'assets/templates/single.html'
-        })
-    })
+        });
+
+      //Enable pretty permalinks, sans the #
+      $locationProvider.html5Mode(true);
+    }])
     .filter('to_trusted', ['$sce', function ($sce) {
       return function (text) {
         return $sce.trustAsHtml(text);

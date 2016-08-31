@@ -159,6 +159,11 @@ function genesis_sample_comments_gravatar( $args ) {
  * Add all of the new Angular stuff in functions
  * ===================================================*/
 
+//*Add the base "/" to the head for pretty routing.
+add_action('wp_head', __NAMESPACE__ . '\add_base_location_provider_to_wp_head');
+function add_base_location_provider_to_wp_head() {
+	echo '<base href="/">';
+}
 
 //*Add the ng-app to the <body> element
 add_filter( 'genesis_attr_body', __NAMESPACE__ . '\add_ng_app_to_body' );
