@@ -1,7 +1,7 @@
 <div ng-controller="Posts" ng-repeat="post in posts">
     <article class="single-post post type-post status-publish format-standard has-post-thumbnail entry">
         <header class="entry-header">
-            <h2 class="entry-title">{{post.title.rendered}}</h2>
+            <h2 class="entry-title"><a href="#/post/{{post.slug}}">{{post.title.rendered}}</a></h2>
             <p class="entry-meta">Posted by {{post.author_name}} on {{post.date | date:'longDate'}}</p>
         </header>
         <img class="attachment-post-image size-post-image wp-post-image" ng-src="{{post.featured_image_src}}"/>
