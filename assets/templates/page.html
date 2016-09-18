@@ -1,0 +1,16 @@
+<article class="single-post post type-post status-publish format-standard has-post-thumbnail entry"
+         ng-controller="pageView">
+    <header class="entry-header">
+        <h2 class="entry-title">{{post.title.rendered}}</h2>
+    </header>
+    <img class="attachment-post-image size-post-image wp-post-image" ng-src="{{post.featured_image_src}}"/>
+    <div class="entry-content">
+        <p ng-bind-html="post.content.rendered | to_trusted"></p>
+        <p><a href="#/post/{{post.slug}}">Read more...</a></p>
+    </div>
+    <footer class="entry-footer">
+        <p class="entry-meta">
+            Filed Under: <span class="entry-categories" ng-repeat="cat in post.category_name">{{cat}}{{$last ? '' : ' | '}}</span>
+        </p>
+    </footer>
+</article>

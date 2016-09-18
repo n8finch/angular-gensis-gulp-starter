@@ -258,3 +258,18 @@ function featured_post_image() {
 		the_post_thumbnail( 'post-image' );
 	}
 }
+
+
+add_filter( 'wp_setup_nav_menu_item', __NAMESPACE__ . '\filter_nav_menu_items', 1 );
+function filter_nav_menu_items($menu){
+	$post_type = ($menu->object); //gets post type
+
+	//if post type is a page, then create a new URL
+	if ($post_type === 'page') {
+		$menu_url = $menu->url;
+		$new_url  = '/pages' . str_replace( 'https://n8finch.dev/', '/', $menu_url );
+		$menu->url = $new_url;
+	}
+
+	return $menu;
+}

@@ -37211,6 +37211,7 @@ angular.module('ui.router.state')
 
 
   angular.module('myApp', ['ngResource', 'ui.router'])
+    //CONTROLLERS
     .controller('Posts', ['$scope', '$http', function ($scope, $http) {
       $http({
         url: 'https://n8finch.dev/wp-json/wp/v2/posts',
@@ -37220,15 +37221,8 @@ angular.module('ui.router.state')
       });
 
     }])
-    //FACTORIES
-
-    .factory('PostsBySlug', function ($resource) {
-      return $resource(ajaxInfo.api_url + 'posts/this/:id', {
-        id: '@id'
-      });
-    })
-    .controller('singleView', ['$scope', '$http', 'PostsBySlug', '$stateParams', function ($scope, $http, PostsBySlug, $stateParams) {
-
+    .controller('singleView', ['$scope', '$http', '$stateParams', function ($scope, $http, $stateParams) {
+      console.log('singleview running');
       $http({
         url: 'https://n8finch.dev/wp-json/wp/v2/posts?filter[name]=' + $stateParams.slug,
         cache: true
@@ -37236,26 +37230,20 @@ angular.module('ui.router.state')
         console.log(res[0]);
         $scope.post = res[0];
       });
-
-      //TODO: read and understand all of this.
-      //TODO: figure out commenting, or just add that in at the bottom??
-      // $scope.savecomment = function(){
-      //   $scope.openComment.post = $scope.post.ID;
-      //   Comments.save($scope.openComment,function(res){
-      //     if( res.id ) {
-      //       $scope.openComment = {};
-      //       $scope.openComment.post = $scope.post.ID;
-      //       PostsBySlug.get($stateParams,function(res){
-      //         $scope.post = res.post;
-      //       });
-      //     }
-      //   });
-      // }
-
+    }])
+    .controller('pageView', ['$scope', '$http', '$stateParams', function ($scope, $http, $stateParams) {
+      console.log('pageView running');
+      $http({
+        url: 'https://n8finch.dev/wp-json/wp/v2/pages?filter[name]=' + $stateParams.slug,
+        cache: true
+      }).success(function (res) {
+        console.log(res[0]);
+        $scope.post = res[0];
+      });
     }])
     //ROUTES
     .config([ '$stateProvider', '$urlRouterProvider', '$locationProvider', function ($stateProvider, $urlRouterProvider, $locationProvider) {
-      $urlRouterProvider.otherwise('/');
+      // $urlRouterProvider.otherwise('/');
       $stateProvider
         .state('post', {
           url: '/',
@@ -37263,9 +37251,14 @@ angular.module('ui.router.state')
           templateUrl: ajaxInfo.template_directory + 'assets/templates/app-index.html'
         })
         .state('single', {
-          url: '/:slug',
+          url: '/posts/:slug/',
           controller: 'singleView',
           templateUrl: ajaxInfo.template_directory + 'assets/templates/single.html'
+        })
+        .state('page', {
+          url: '/pages/:slug/',
+          controller: 'pageView',
+          templateUrl: ajaxInfo.template_directory + 'assets/templates/page.html'
         });
 
       //Enable pretty permalinks, sans the #
