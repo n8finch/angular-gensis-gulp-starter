@@ -160,7 +160,7 @@ function genesis_sample_comments_gravatar( $args ) {
  * ===================================================*/
 
 //*Add the base "/" to the head for pretty routing.
-add_action('wp_head', __NAMESPACE__ . '\add_base_location_provider_to_wp_head');
+add_action( 'wp_head', __NAMESPACE__ . '\add_base_location_provider_to_wp_head' );
 function add_base_location_provider_to_wp_head() {
 	echo '<base href="/">';
 }
@@ -224,9 +224,10 @@ function get_author_name_from_restapi( $object, $field_name, $request ) {
 
 function get_category_name_from_restapi( $object, $field_name, $request ) {
 	$cats = [];
-	foreach ($object['categories'] as $cat ) {
-		array_push($cats, get_cat_name($cat));
+	foreach ( $object['categories'] as $cat ) {
+		array_push( $cats, get_cat_name( $cat ) );
 	}
+
 	return $cats;
 }
 
@@ -261,13 +262,13 @@ function featured_post_image() {
 
 
 add_filter( 'wp_setup_nav_menu_item', __NAMESPACE__ . '\filter_nav_menu_items', 1 );
-function filter_nav_menu_items($menu){
-	$post_type = ($menu->object); //gets post type
+function filter_nav_menu_items( $menu ) {
+	$post_type = ( $menu->object ); //gets post type
 
 	//if post type is a page, then create a new URL
-	if ($post_type === 'page') {
-		$menu_url = $menu->url;
-		$new_url  = '/pages' . str_replace( 'https://n8finch.dev/', '/', $menu_url );
+	if ( $post_type === 'page' ) {
+		$menu_url  = $menu->url;
+		$new_url   = '/pages' . str_replace( 'https://n8finch.dev/', '/', $menu_url );
 		$menu->url = $new_url;
 	}
 

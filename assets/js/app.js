@@ -19,7 +19,6 @@
         url: 'https://n8finch.dev/wp-json/wp/v2/posts?filter[name]=' + $stateParams.slug,
         cache: true
       }).success(function (res) {
-        console.log(res[0]);
         $scope.post = res[0];
       });
     }])
@@ -29,15 +28,14 @@
         url: 'https://n8finch.dev/wp-json/wp/v2/pages?filter[name]=' + $stateParams.slug,
         cache: true
       }).success(function (res) {
-        console.log(res[0]);
         $scope.post = res[0];
       });
     }])
     //ROUTES
     .config([ '$stateProvider', '$urlRouterProvider', '$locationProvider', function ($stateProvider, $urlRouterProvider, $locationProvider) {
-      // $urlRouterProvider.otherwise('/');
+      $urlRouterProvider.otherwise('/');
       $stateProvider
-        .state('post', {
+        .state('posts', {
           url: '/',
           controller: 'Posts',
           templateUrl: ajaxInfo.template_directory + 'assets/templates/app-index.html'
